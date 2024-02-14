@@ -32,17 +32,23 @@ import advantureImg from "../../assets/image/adventure.png";
 import puzzleImg from "../../assets/image/puzzle.png";
 import racingImg from "../../assets/image/racing.png";
 import sportImg from "../../assets/image/sports.png";
+import ShowAndHide from "./ShowAndHide";
 
 const Sidebar = () => {
   const [browse, setBrowse] = useState(false);
   const [platforms, setPlatforms] = useState(false);
+  const [genres, setGenres] = useState(false);
 
-  const toggle = () => {
+  const toggleBrows = () => {
     setBrowse((Value) => !Value);
   };
 
   const togglePlatfom = () => {
     setPlatforms((value) => !value);
+  };
+
+  const toggleGenres = () => {
+    setGenres((value) => !value);
   };
 
   return (
@@ -83,8 +89,8 @@ const Sidebar = () => {
           </>
         )}
 
-        <span onClick={toggle}>
-          <SidebarItems
+        <span onClick={toggleBrows}>
+          <ShowAndHide
             label={`${browse === true ? "Hide" : "Show All "} `}
             icon={browse === true ? FaChevronUp : FaChevronDown}
           />
@@ -106,7 +112,7 @@ const Sidebar = () => {
         )}
 
         <span onClick={togglePlatfom}>
-          <SidebarItems
+          <ShowAndHide
             label={`${platforms === true ? "Hide" : "Show All "} `}
             icon={platforms === true ? FaChevronUp : FaChevronDown}
           />
@@ -117,12 +123,28 @@ const Sidebar = () => {
         <p className="text-2xl font-bold">Genres</p>
         <Genres label="Actions" src={actionImg} alt="action image" />
         <Genres label="Strategy" src={StrategyImg} alt="Strategy image" />
-        <Genres label="RPG" src={rpgImg} alt="action image" />
-        <Genres label="Shooter" src={shooterImg} alt="action image" />
-        <Genres label="Advanture" src={advantureImg} alt="action image" />
-        <Genres label="Puzzle" src={puzzleImg} alt="action image" />
-        <Genres label="Racing" src={racingImg} alt="action image" />
-        <Genres label="Sports" src={sportImg} alt="action image" />
+        <Genres label="RPG" src={rpgImg} alt="RPG image" />
+
+        {genres && (
+          <>
+            <Genres label="Shooter" src={shooterImg} alt="Shooter image" />
+            <Genres
+              label="Advanture"
+              src={advantureImg}
+              alt="Advanture image"
+            />
+            <Genres label="Puzzle" src={puzzleImg} alt="Puzzle image" />
+            <Genres label="Racing" src={racingImg} alt="Racing image" />
+            <Genres label="Sports" src={sportImg} alt="Sports image" />
+          </>
+        )}
+
+        <span onClick={toggleGenres}>
+          <ShowAndHide
+            label={`${genres === true ? "Hide" : "Show All "} `}
+            icon={genres === true ? FaChevronUp : FaChevronDown}
+          />
+        </span>
       </div>
     </aside>
   );
