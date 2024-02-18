@@ -1,7 +1,7 @@
 import React, { createContext, ReactNode, useEffect, useState } from "react";
 import axios from "axios";
 import { BASE_URL } from "../constant";
-import Game from "../types/Game";
+import { Game } from "../types/Game";
 
 
 type MyContextData = {
