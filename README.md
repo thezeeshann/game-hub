@@ -1,3 +1,6 @@
+![Screenshot (4)](https://github.com/thezeeshann/game-hub/assets/88139550/585f77a7-df18-4696-aa8c-bf5cc3677af2)
+
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
