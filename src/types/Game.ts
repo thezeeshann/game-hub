@@ -13,6 +13,7 @@ export interface Game {
   background_image: string;
   released: string;
   genres: Genres[];
-  parent_platforms: Platform[];
-  added:string
+  parent_platforms: {platform:Platform}[];
+  added:string,
+  metacritic:string
 }
