@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { FaPlus } from "react-icons/fa6";
+import { FaPlus } from "react-icons/fa";
+import { Link } from "react-router-dom";
 // import {
 //   FaWindows,
 //   FaPlaystation,
@@ -8,8 +9,8 @@ import { FaPlus } from "react-icons/fa6";
 //   FaLinux,
 //   FaAndroid,
 // } from "react-icons/fa";
-// import { MdPhoneIphone } from "react-icons/md";
 // import { SiNintendo } from "react-icons/si";
+// import { MdPhoneIphone } from "react-icons/md";
 // import { BsGlobe } from "react-icons/bs";
 
 interface GameCardProps {
@@ -20,8 +21,8 @@ interface GameCardProps {
   genres: string[];
   chart: string;
   added: string;
-  // platforms: string[];
-  // platforms:{ name: string }[];
+  metacritic: string;
+  gameId: number;
 }
 
 const GameCard: React.FC<GameCardProps> = ({
@@ -32,11 +33,9 @@ const GameCard: React.FC<GameCardProps> = ({
   genres,
   chart,
   added,
-  // platforms,
-  // platforms
+  metacritic,
+  gameId
 }) => {
-
-  
   const [open, setOpen] = useState(false);
   const toggle = () => {
     setOpen((value) => !value);
@@ -45,26 +44,26 @@ const GameCard: React.FC<GameCardProps> = ({
     setOpen(false);
   };
 
-  // const getPlatformIcon = (platformName: string): IconType => {
+  // const getPlatformIcon = (platformName: string) => {
   //   switch (platformName) {
   //     case "PC":
-  //       return FaWindows;
+  //       return <FaWindows size={"1.5rem"} className="text-[#859696]" />;
   //     case "PlayStation":
-  //       return FaPlaystation;
-  //     case "Xbox":
-  //       return FaXbox;
+  //       return <FaPlaystation size={"1.5rem"} className="text-[#859696]" />;
+  //     case "xbox":
+  //       return <FaXbox size={"1.5rem"} className="text-[#859696]" />;
   //     case "nintendo":
-  //       return SiNintendo;
+  //       return <SiNintendo size={"1.5rem"} className="text-[#859696]" />;
   //     case "mac":
-  //       return FaApple;
+  //       return <FaApple size={"1.5rem"} className="text-[#859696]" />;
   //     case "linux":
-  //       return FaLinux;
+  //       return <FaLinux size={"1.5rem"} className="text-[#859696]" />;
   //     case "android":
-  //       return FaAndroid;
+  //       return <FaAndroid size={"1.5rem"} className="text-[#859696]" />;
   //     case "ios":
-  //       return MdPhoneIphone;
+  //       return <MdPhoneIphone size={"1.5rem"} className="text-[#859696]" />;
   //     case "web":
-  //       return BsGlobe;
+  //       return <BsGlobe size={"1.5rem"} className="text-[#859696]" />;
   //   }
   // };
 
@@ -72,21 +71,28 @@ const GameCard: React.FC<GameCardProps> = ({
     <div className="w-auto mt-5 transition ease-in-out delay-200 hover:scale-105">
       <img src={gameSrc} alt={gameAlt} className=" rounded-t-xl" />
       <div className="bg-[#202020] rounded-b-xl  px-4 py-4 flex flex-col gap-y-2 cursor-pointer">
-        <div className="flex flex-row gap-x-2">
-          {/* {
-            platforms?.map((platform, index)=>{
-              const Icon = getPlatformIcon(platform.name)
-              return <Icon key={index} size={"1.2rem"} />
-            })
-          }
-          <p>{platforms.join(" ")}</p> */}
+        <div className="flex flex-row items-center justify-between ">
+          <div className="flex flex-row items-center gap-x-2">
+            {/* {parent_platforms.map((platfrom:Platform)=>(
+              <>{platfrom?.platform?.name}</>
+            ))} */}
+          </div>
+          <div className="border-[1px] px-1.5  border-[#6DC849] rounded-md">
+            <span className="text-sm font-bold text-[#6DC849]">
+              {metacritic}
+            </span>
+          </div>
         </div>
         <div
           onMouseEnter={toggle}
           onMouseLeave={toggle2}
           className="flex flex-col mb-2 gap-y-2"
         >
-          <p className="text-lg font-bold hover:text-neutral-400">{gameName}</p>
+          <Link to={`/games/${gameId}`}>
+            <p className="text-lg font-bold hover:text-neutral-400">
+              {gameName}
+            </p>
+          </Link>
           <div className="bg-[#444444] justify-center rounded-md w-max px-2 py-1 flex flex-row items-center gap-x-1 hover:bg-white hover:text-black">
             <div>
               <FaPlus size={"1rem"} />
