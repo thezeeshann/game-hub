@@ -11,7 +11,8 @@ type MyContextData = {
   setGames:React.Dispatch<React.SetStateAction<Game[]>>;
 };
 
-const AppContext = createContext<MyContextData | undefined>(undefined);
+
+const AppContext = createContext<MyContextData | null>(null);
 
 type MyContextProviderProps = {
   children: ReactNode;
