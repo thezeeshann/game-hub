@@ -9,7 +9,15 @@ import AppContext from "../context/AppContext";
 import axios from "axios";
 import { BASE_URL } from "../constant";
 import Spinner from "../components/Spinner";
-import { FaWindows, FaPlaystation, FaXbox, FaSteam,FaGooglePlay } from "react-icons/fa";
+import {
+  FaWindows,
+  FaPlaystation,
+  FaXbox,
+  FaSteam,
+  FaGooglePlay,
+  FaApple ,
+  FaLinux 
+} from "react-icons/fa";
 import { SiEpicgames, SiNintendo, SiGogdotcom } from "react-icons/si";
 import { GrAppleAppStore } from "react-icons/gr";
 import {
@@ -23,6 +31,7 @@ import {
   Genres,
   Ratings,
   GameScreenshots,
+  Parent_Platforms,
 } from "../types/SingleGame";
 
 const SingleGame: React.FC<SingleGameProps> = () => {
@@ -71,6 +80,8 @@ const SingleGame: React.FC<SingleGameProps> = () => {
 
   const getStoreIcon = (storeName: string) => {
     switch (storeName) {
+      case "playstation":
+        return <FaPlaystation size={"1.5rem"} className="text-[#859696]" />
       case "playstation-store":
         return <FaPlaystation size={"1.5rem"} className="text-[#859696]" />;
       case "epic-games":
@@ -86,9 +97,17 @@ const SingleGame: React.FC<SingleGameProps> = () => {
       case "nintendo":
         return <SiNintendo size={"1.2rem"} className="text-[#859696]" />;
       case "google-play":
-        return <FaGooglePlay size={"1.5rem"} className="text-[#859696]" />
+        return <FaGooglePlay size={"1.5rem"} className="text-[#859696]" />;
       case "apple-appstore":
-        return <GrAppleAppStore size={"1.5rem"} className="text-[#859696]" />
+        return <GrAppleAppStore size={"1.5rem"} className="text-[#859696]" />;
+      case "pc":
+        return <FaWindows size={"1.5rem"} className="text-[#859696]" />
+      case "xbox":
+        return <FaXbox size={"1.5rem"} className="text-[#859696]" />
+      case "mac":
+        return <FaApple size={"1.5rem"} className="text-[#859696]" />
+      case "linux":
+        return <FaLinux size={"1.5rem"} className="text-[#859696]" />
     }
   };
 
@@ -111,8 +130,15 @@ const SingleGame: React.FC<SingleGameProps> = () => {
               {singleGame?.released}
             </span>
             <div className="flex flex-row gap-x-2">
-              <FaWindows size={"1.2rem"} />
-              <FaPlaystation size={"1.2rem"} />
+
+              {
+                singleGame?.parent_platforms.map((platform:Parent_Platforms)=>(
+                 <>
+                  {getStoreIcon(platform.platform.slug)}
+                 </>
+    
+                ))
+              }
             </div>
             <span className="text-sm uppercase text-neutral-200">
               AveRAGE PLAYTIME: {singleGame?.playtime} HOURS
@@ -160,7 +186,7 @@ const SingleGame: React.FC<SingleGameProps> = () => {
             </div>
             <div className="flex flex-row items-center gap-x-5">
               <div className="flex flex-col gap-y-2">
-                <p className="text-xl font-semibold">Exceptional 🔥</p>
+                <p className="text-xl font-semibold"> Exceptional 🔥</p>
                 <span className="text-sm text-gray-400 underline cursor-pointer hover:text-gray-100">
                   {" "}
                   {singleGame?.ratings_count} RATINGS
@@ -168,14 +194,19 @@ const SingleGame: React.FC<SingleGameProps> = () => {
               </div>
               <div className="flex flex-col">
                 <p className="text-xl font-semibold"># 1</p>
-                <span className="text-sm text-gray-400 underline cursor-pointer hover:text-gray-100">
-                  ACTION
-                </span>
+                {
+                  singleGame?.genres.map((genres:Genres)=>(
+                    <span className="text-sm text-gray-400 underline cursor-pointer hover:text-gray-100">
+                    {genres.name}
+                  </span>
+                  ))
+                }
+
               </div>
               <div>
                 <p className="text-xl font-semibold"># 1</p>
                 <span className="text-sm text-gray-400 underline cursor-pointer hover:text-gray-100">
-                  TOP 2013
+                  TOP {singleGame?.released}
                 </span>
               </div>
             </div>
@@ -219,7 +250,7 @@ const SingleGame: React.FC<SingleGameProps> = () => {
         </div>
       </div>
 
-      <div className="flex flex-row w-full gap-x-5  mb-5">
+      <div className="flex flex-row w-full mb-5 gap-x-5">
         <div className="flex flex-col mt-5 gap-y-8 w-[50%] ">
           <div className="flex flex-row items-center gap-x-5">
             <button className="bg-[#2D2D2D] py-3 px-5 rounded flex flex-row items-center gap-x-2 ">
@@ -242,7 +273,7 @@ const SingleGame: React.FC<SingleGameProps> = () => {
                 {singleGame?.description_raw}{" "}
                 <span
                   onClick={() => setShowMore(false)}
-                  className="bg-white text-xs px-1 rounded-md cursor-pointer text-black"
+                  className="px-1 text-xs text-black bg-white rounded-md cursor-pointer"
                 >
                   Show less
                 </span>
@@ -252,7 +283,7 @@ const SingleGame: React.FC<SingleGameProps> = () => {
                 {singleGame?.description_raw.substring(0, 600)}....{" "}
                 <span
                   onClick={() => setShowMore(true)}
-                  className="bg-white text-xs px-1 rounded-md cursor-pointer text-black"
+                  className="px-1 text-xs text-black bg-white rounded-md cursor-pointer"
                 >
                   Read more
                 </span>
@@ -363,7 +394,7 @@ const SingleGame: React.FC<SingleGameProps> = () => {
               )}
             </div>
 
-            <div className=" flex flex-col gap-y-2">
+            <div className="flex flex-col gap-y-2">
               {singleGame?.platforms.map((requirement: Platforms) => {
                 if (requirement?.requirements?.recommended?.length === 0) {
                   return "";
@@ -392,7 +423,7 @@ const SingleGame: React.FC<SingleGameProps> = () => {
 
                   <span
                     onClick={() => setShowMoreTwo(false)}
-                    className="text-xs -mt-5 cursor-pointer bg-white w-max px-1 rounded-md text-black"
+                    className="px-1 -mt-5 text-xs text-black bg-white rounded-md cursor-pointer w-max"
                   >
                     Show less...
                   </span>
@@ -419,7 +450,7 @@ const SingleGame: React.FC<SingleGameProps> = () => {
                   )}
                   <span
                     onClick={() => setShowMoreTwo(true)}
-                    className="text-xs -mt-5 cursor-pointer bg-white w-max px-1 rounded-md text-black"
+                    className="px-1 -mt-5 text-xs text-black bg-white rounded-md cursor-pointer w-max"
                   >
                     Read more...
                   </span>
@@ -427,7 +458,7 @@ const SingleGame: React.FC<SingleGameProps> = () => {
               )}
             </div>
 
-            <div className=" flex flex-col gap-y-2">
+            <div className="flex flex-col gap-y-2">
               {singleGame?.platforms.map((platform: Platforms) => (
                 <p
                   key={platform.platform.id}
