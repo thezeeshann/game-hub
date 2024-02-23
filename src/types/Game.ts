@@ -1,9 +1,10 @@
 import Genres from "./Genres";
 
 export interface Platform {
-  id: number;
-  name: string;
-  slug: string;
+  platform:{
+    id:string,
+    name:string
+  }
 }
 
 export interface Game {
@@ -13,7 +14,7 @@ export interface Game {
   background_image: string;
   released: string;
   genres: Genres[];
-  parent_platforms: {platform:Platform}[];
+  parent_platforms: Platform[];
   added:string,
   metacritic:string
 }

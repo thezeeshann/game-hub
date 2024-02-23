@@ -16,6 +16,14 @@ export interface SingleGameProps {
   metacritic: number;
   stores: Store[];
   metacritic_platforms: Metacritic[];
+  parent_platforms: Parent_Platforms[];
+}
+
+export interface Parent_Platforms {
+  platform:{
+    id:number,
+    slug:string
+  }
 }
 
 export interface Metacritic {
