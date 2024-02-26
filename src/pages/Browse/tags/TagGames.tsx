@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react'
+import {Games} from "../../../types/Browse/Tags"
 import { IoPersonSharp } from "react-icons/io5";
-import { Games } from "../../types/Browse/Platforms";
+
 
 interface Props {
-  platforms: {
+    tags: {
     games: Games[];
   };
 }
 
-const GameName: React.FC<Props> = ({ platforms }) => {
-    
-  const displayedGames = platforms.games.slice(0, 3);
+const TagGames:React.FC<Props> = ({tags}) => {
+    const displayedGames = tags.games.slice(0, 3);
 
   return (
     <div className="flex flex-col gap-y-1">
@@ -29,6 +29,6 @@ const GameName: React.FC<Props> = ({ platforms }) => {
       ))}
     </div>
   );
-};
+}
 
-export default GameName;
+export default TagGames

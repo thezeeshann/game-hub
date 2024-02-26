@@ -1,36 +1,35 @@
-import AppContext from "../../context/AppContext";
 import { useContext } from "react";
-import Spinner from "../../components/Spinner";
-import { BrowsePlatfroms } from "../../types/Browse/Platforms";
-import GameName from "./GameName";
+import AppContext from "../../../context/AppContext";
+import Spinner from "../../../components/Spinner";
+import { BrowseGenres } from "../../../types/Browse/Genres";
+import GenresGame from "./GenresGame";
 
-const Platforms = () => {
-  
-  const { browsePlatforms, isLoading } = useContext(AppContext);
+const Genres = () => {
+  const { genres, isLoading } = useContext(AppContext);
 
   return (
     <section className="flex flex-col font-Poppins gap-y-5">
-      <p className="text-6xl font-bold">Platforms</p>
+      <p className="text-6xl font-bold">Genres</p>
 
       {isLoading === true ? (
         <Spinner />
       ) : (
         <div className="grid flex-row items-center justify-between grid-cols-3 gap-x-5">
           <>
-            {browsePlatforms.map((platfroms: BrowsePlatfroms) => (
+            {genres.map((genres: BrowseGenres) => (
               <div
-                key={platfroms.id}
+                key={genres.id}
                 className="relative flex flex-col w-auto h-[280px]  rounded-lg gap-x-5"
               >
                 <img
-                  src={platfroms.image_background}
-                  alt={platfroms.name}
+                  src={genres.image_background}
+                  alt={genres.name}
                   className="rounded-md opacity-40 h-[250px]"
                 />
                 <div className="absolute w-full p-4">
                   <div className="flex flex-col items-center justify-center gap-y-3">
                     <p className="text-lg font-bold text-center underline">
-                      {platfroms.name}
+                      {genres.name}
                     </p>
                     <div className="px-8 py-2 text-white cursor-pointer bg-slate-200 bg-opacity-20 hover:bg-white hover:text-black">
                       Follow
@@ -40,12 +39,11 @@ const Platforms = () => {
                     <div className="flex flex-row items-center justify-between">
                       <span className="font-semibold">Popular items</span>
                       <span className="text-sm text-neutral-400">
-                        {platfroms.games_count?.toLocaleString()}
+                        {genres.games_count?.toLocaleString()}
                       </span>
                     </div>
                     <hr />
-                    <GameName platforms={platfroms} />
-                    {/* gamename */}
+                    <GenresGame genres={genres} />
                   </div>
                 </div>
               </div>
@@ -57,4 +55,4 @@ const Platforms = () => {
   );
 };
 
-export default Platforms;
+export default Genres;

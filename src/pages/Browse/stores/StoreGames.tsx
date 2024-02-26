@@ -1,6 +1,6 @@
 import React from "react";
 import { IoPersonSharp } from "react-icons/io5";
-import { Games } from "../../types/Browse/Store";
+import { Games } from "../../../types/Browse/Store";
 
 interface Props {
     store: {
