@@ -13,6 +13,14 @@ import { Link } from "react-router-dom";
 // import { MdPhoneIphone } from "react-icons/md";
 // import { BsGlobe } from "react-icons/bs";
 
+
+export interface ParentPlatformName {
+  platform:{
+    id:number,
+    name:string
+  }
+}
+
 interface GameCardProps {
   gameSrc: string;
   gameAlt: string;
@@ -23,6 +31,7 @@ interface GameCardProps {
   added: string;
   metacritic: string;
   gameId: number;
+  // parent_platforms:ParentPlatformName[];
 }
 
 const GameCard: React.FC<GameCardProps> = ({
@@ -34,7 +43,8 @@ const GameCard: React.FC<GameCardProps> = ({
   chart,
   added,
   metacritic,
-  gameId
+  gameId,
+  // parent_platforms
 }) => {
   const [open, setOpen] = useState(false);
   const toggle = () => {
@@ -73,9 +83,10 @@ const GameCard: React.FC<GameCardProps> = ({
       <div className="bg-[#202020] rounded-b-xl  px-4 py-4 flex flex-col gap-y-2 cursor-pointer">
         <div className="flex flex-row items-center justify-between ">
           <div className="flex flex-row items-center gap-x-2">
-            {/* {parent_platforms.map((platfrom:Platform)=>(
-              <>{platfrom?.platform?.name}</>
-            ))} */}
+           {/* {parent_platforms.map((parent_platform:ParentPlatformName)=>(
+            
+            <>{getPlatformIcon(parent_platform?.platform?.name)}</> 
+           ))} */}
           </div>
           <div className="border-[1px] px-1.5  border-[#6DC849] rounded-md">
             <span className="text-sm font-bold text-[#6DC849]">

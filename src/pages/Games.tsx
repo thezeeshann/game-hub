@@ -24,7 +24,6 @@ const Games = () => {
               key={game.id}
               gameId={game.id}
               metacritic={game.metacritic}
-              // platforms={game.parent_platforms?.map((platform)=>({name:platform.platform.name}))}
               // parent_platforms={game.parent_platforms.map((platform:Platform)=>{platform?.platform?.name})}
               added={game.added}
               gameSrc={game.background_image || img}
