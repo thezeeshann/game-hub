@@ -1,5 +1,8 @@
+📷
+
 ![Screenshot (4)](https://github.com/thezeeshann/game-hub/assets/88139550/585f77a7-df18-4696-aa8c-bf5cc3677af2)
 
+![Screenshot (5)](https://github.com/thezeeshann/game-hub/assets/88139550/3d4cf160-7ed5-40cb-97f7-2d22d50b1b4f)
 
 # React + TypeScript + Vite
 
