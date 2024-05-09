@@ -6,12 +6,11 @@ import SingleGame from "./pages/SingleGame";
 import Platforms from "./pages/Browse/platfroms/Platforms";
 import Store from "./pages/Browse/stores/Store";
 import GenresGame from "./pages/Browse/genres/Genres";
-import Publishers from "./pages/Browse/publishers/Publishers"
+import Publishers from "./pages/Browse/publishers/Publishers";
 import Creators from "./pages/Browse/creators/Creators";
 import Tags from "./pages/Browse/tags/Tags";
 import Developer from "./pages/Browse/developer/Developer";
 import Error from "./components/Error";
-import "./App.css";
 
 function App() {
   return (
@@ -20,7 +19,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />}>
           <Route index element={<Games />} />
-          <Route path="/games/:gameId" element={<SingleGame />} />
+          <Route path="/games/:gameSlug" element={<SingleGame />} />
           <Route path="/platforms" element={<Platforms />} />
           <Route path="/stores" element={<Store />} />
           <Route path="/genres" element={<GenresGame />} />
@@ -28,7 +27,7 @@ function App() {
           <Route path="/creators" element={<Creators />} />
           <Route path="/developers" element={<Developer />} />
           <Route path="/tags" element={<Tags />} />
-          <Route path="*" element={<Error/>} />
+          <Route path="*" element={<Error />} />
         </Route>
       </Routes>
     </>
