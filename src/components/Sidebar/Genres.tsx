@@ -1,14 +1,12 @@
-import React from "react";
-
-interface genresProps {
+type GenresProps = {
   label: string;
-  src:string,
-  alt:string
-}
+  src: string;
+  alt: string;
+};
 
-const Genres: React.FC<genresProps> = ({ label, src,alt }) => {
+const Genres = ({ label, src, alt }: GenresProps) => {
   return (
-    <div className="flex flex-row gap-x-1 items-center">
+    <div className="flex flex-row items-center gap-x-1">
       <div className="p-[6px] rounded-md">
         <img src={src} alt={alt} className="w-[32px] h-[32px]" />
       </div>{" "}

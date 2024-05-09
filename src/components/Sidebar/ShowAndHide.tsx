@@ -1,16 +1,15 @@
-import React from "react";
 import { IconType } from "react-icons";
 
-interface ShowAndHideProps {
+type Props = {
   icon: IconType;
   label: string;
-}
+};
 
-const ShowAndHide:React.FC<ShowAndHideProps> = ({icon:Icon,label}) => {
+const ShowAndHide = ({ icon: Icon, label }: Props) => {
   return (
-    <div className="flex flex-row gap-x-2 items-center">
+    <div className="flex flex-row items-center gap-x-2">
       <div className="bg-[#262626] p-[6px] rounded-md text-gray-500">
-        <Icon size={"1.2rem"}  />
+        <Icon size={"1.2rem"} />
       </div>{" "}
       <span className="text-gray-500">{label}</span>
     </div>
