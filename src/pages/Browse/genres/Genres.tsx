@@ -1,11 +1,9 @@
-import { useContext } from "react";
-import AppContext from "../../../context/AppContext";
 import Spinner from "../../../components/Spinner";
-import { BrowseGenres } from "../../../types/Browse/Genres";
+import { useBrowseGenres } from "../../../lib/hooks";
 import GenresGame from "./GenresGame";
 
 const Genres = () => {
-  const { genres, isLoading } = useContext(AppContext);
+  const { isLoading, genres } = useBrowseGenres();
 
   return (
     <section className="flex flex-col font-Poppins gap-y-5">
@@ -16,7 +14,7 @@ const Genres = () => {
       ) : (
         <div className="grid flex-row items-center justify-between grid-cols-3 gap-x-5">
           <>
-            {genres.map((genres: BrowseGenres) => (
+            {genres.map((genres) => (
               <div
                 key={genres.id}
                 className="relative flex flex-col w-auto h-[280px]  rounded-lg gap-x-5"

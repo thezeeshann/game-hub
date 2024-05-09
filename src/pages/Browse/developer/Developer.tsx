@@ -1,11 +1,9 @@
-import AppContext from "../../../context/AppContext";
-import { useContext } from "react";
 import Spinner from "../../../components/Spinner";
-import { BrowseDeveloper } from "../../../types/Browse/Developer.ts";
+import { useBrowseDevelopers } from "../../../lib/hooks.ts";
 import DeveloperGames from "./DeveloperGames.tsx";
 
 const Developer = () => {
-  const { isLoading, developer } = useContext(AppContext);
+  const { isLoading, developer } = useBrowseDevelopers();
 
   return (
     <section className="flex flex-col font-Poppins gap-y-5">
@@ -16,7 +14,7 @@ const Developer = () => {
       ) : (
         <div className="grid flex-row items-center justify-between grid-cols-3 gap-x-5">
           <>
-            {developer?.map((developer: BrowseDeveloper) => (
+            {developer?.map((developer) => (
               <div
                 key={developer.id}
                 className="relative flex flex-col w-auto h-[280px]  rounded-lg gap-x-5"

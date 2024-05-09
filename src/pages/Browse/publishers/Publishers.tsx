@@ -1,11 +1,9 @@
-import { useContext } from "react";
-import AppContext from "../../../context/AppContext";
 import Spinner from "../../../components/Spinner";
-import { BrowsePublisher } from "../../../types/Browse/publishers";
+import { useBrowsePublishers } from "../../../lib/hooks";
 import PublishersGames from "./PublishersGames";
 
 const Publishers = () => {
-  const { publishers, isLoading } = useContext(AppContext);
+  const { isLoading, publishers } = useBrowsePublishers();
 
   return (
     <section className="flex flex-col font-Poppins gap-y-5">
@@ -16,7 +14,7 @@ const Publishers = () => {
       ) : (
         <div className="grid flex-row items-center justify-between grid-cols-3 gap-x-5">
           <>
-            {publishers?.map((publisher: BrowsePublisher) => (
+            {publishers?.map((publisher) => (
               <div
                 key={publisher.id}
                 className="relative flex flex-col w-auto h-[280px]  rounded-lg gap-x-5"

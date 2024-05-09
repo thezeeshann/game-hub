@@ -1,12 +1,10 @@
+import ErrorMessage from "../components/ErrorMessage";
 import GameCard from "../components/GameCard";
-import img from "../assets/image/game.jpg";
-import { useContext } from "react";
-import AppContext from "../context/AppContext";
-import { Game } from "../types/Game";
 import Spinner from "../components/Spinner";
+import { useGamesContext } from "../lib/hooks";
 
 const Games = () => {
-  const { games, isLoading } = useContext(AppContext);
+  const { games, isLoading, errorMessage } = useGamesContext();
 
   return (
     <section className="flex flex-col font-Poppins gap-y-5">
@@ -18,23 +16,17 @@ const Games = () => {
       {isLoading === true ? (
         <Spinner />
       ) : (
-        <div className="grid grid-cols-3 gap-x-5 ">
-          {games.map((game: Game) => (
-            <GameCard
-              key={game.id}
-              gameId={game.id}
-              metacritic={game.metacritic}
-              // parent_platforms={game.parent_platforms.map((platform:Platform)=>{platform?.platform?.name})}
-              added={game.added}
-              gameSrc={game.background_image || img}
-              gameAlt={game.name}
-              gameName={game.name}
-              releaseDate={game.released}
-              genres={game.genres.map((genre) => genre.name)}
-              chart=" #1 Top 2024"
-            />
-          ))}
-        </div>
+        <>
+          {errorMessage ? (
+            <ErrorMessage message={errorMessage} />
+          ) : (
+            <div className="grid grid-cols-3 gap-x-5 ">
+              {games.map((game) => (
+                <GameCard key={game.id} game={game} />
+              ))}
+            </div>
+          )}
+        </>
       )}
     </section>
   );

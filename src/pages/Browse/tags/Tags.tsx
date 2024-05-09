@@ -1,12 +1,9 @@
-import AppContext from "../../../context/AppContext"
-import { useContext } from "react"
-import {BrowseTags} from "../../../types/Browse/Tags"
-import Spinner from "../../../components/Spinner"
-import TagGames from "./TagGames"
+import Spinner from "../../../components/Spinner";
+import TagGames from "./TagGames";
+import { useBrowseTags } from "../../../lib/hooks";
 
 const Tags = () => {
-
-  const {isLoading,tags} = useContext(AppContext)
+  const { isLoading, tags } = useBrowseTags();
 
   return (
     <section className="flex flex-col font-Poppins gap-y-5">
@@ -17,7 +14,7 @@ const Tags = () => {
       ) : (
         <div className="grid flex-row items-center justify-between grid-cols-3 gap-x-5">
           <>
-            {tags?.map((tags: BrowseTags) => (
+            {tags?.map((tags) => (
               <div
                 key={tags.id}
                 className="relative flex flex-col w-auto h-[280px]  rounded-lg gap-x-5"
@@ -53,7 +50,7 @@ const Tags = () => {
         </div>
       )}
     </section>
-  )
-}
+  );
+};
 
-export default Tags
+export default Tags;

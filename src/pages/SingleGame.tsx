@@ -1,115 +1,24 @@
-import React, { useContext, useEffect, useState } from "react";
+import { useState } from "react";
 import { FaPlus } from "react-icons/fa6";
 import { FaRegComment } from "react-icons/fa6";
-import { GoDotFill } from "react-icons/go";
 import { IoFolderOpenOutline } from "react-icons/io5";
 import { CiGift } from "react-icons/ci";
 import { Link, useParams } from "react-router-dom";
-import AppContext from "../context/AppContext";
-import axios from "axios";
-import { BASE_URL } from "../constant";
 import Spinner from "../components/Spinner";
-import {
-  FaWindows,
-  FaPlaystation,
-  FaXbox,
-  FaSteam,
-  FaGooglePlay,
-  FaApple ,
-  FaLinux 
-} from "react-icons/fa";
-import { SiEpicgames, SiNintendo, SiGogdotcom } from "react-icons/si";
-import { GrAppleAppStore } from "react-icons/gr";
-import {
-  SingleGameProps,
-  Metacritic,
-  Platforms,
-  Store,
-  Publishers,
-  Developers,
-  Tags,
-  Genres,
-  Ratings,
-  GameScreenshots,
-  Parent_Platforms,
-} from "../types/SingleGame";
+import { useSingleGames, useSingleGamesImages } from "../lib/hooks";
+import { GoDotFill } from "react-icons/go";
+import PlatformsIconList from "../components/PlatformsIconList";
 
-const SingleGame: React.FC<SingleGameProps> = () => {
-  const { gameId } = useParams();
-  const [singleGameImages, setSingleGameImages] = useState([]);
-  const [singleGame, setSingleGame] = useState<SingleGameProps | undefined>();
+const SingleGame = () => {
+  const { gameSlug } = useParams();
+  const { singleGame, isLoading } = useSingleGames(gameSlug);
+  const { displayedImages } = useSingleGamesImages(gameSlug);
   const [showMore, setShowMore] = useState(false);
   const [showMoreTwo, setShowMoreTwo] = useState(false);
-  const { setIsLoading, isLoading } = useContext(AppContext);
 
-  useEffect(() => {
-    const getSingleGame = async () => {
-      try {
-        setIsLoading(true);
-        const res = await axios.get<SingleGameProps>(
-          `${BASE_URL}games/${gameId}?key=${import.meta.env.VITE_API_KEY}`
-        );
-        setSingleGame(res.data);
-      } catch (error) {
-        console.log(error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
-
-    getSingleGame();
-  }, [gameId, setIsLoading]);
-
-  useEffect(() => {
-    const getSingleGameScreenshots = async () => {
-      try {
-        const res = await axios.get(
-          `${BASE_URL}games/${gameId}/screenshots?key=${
-            import.meta.env.VITE_API_KEY
-          }`
-        );
-        setSingleGameImages(res.data.results);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    getSingleGameScreenshots();
-  }, [gameId]);
-
-  const displayedImages = singleGameImages.slice(0, 4);
-
-  const getStoreIcon = (storeName: string) => {
-    switch (storeName) {
-      case "playstation":
-        return <FaPlaystation size={"1.5rem"} className="text-[#859696]" />
-      case "playstation-store":
-        return <FaPlaystation size={"1.5rem"} className="text-[#859696]" />;
-      case "epic-games":
-        return <SiEpicgames size={"1.5rem"} className="text-[#859696]" />;
-      case "steam":
-        return <FaSteam size={"1.5rem"} className="text-[#859696]" />;
-      case "xbox360":
-        return <FaXbox size={"1.5rem"} className="text-[#859696]" />;
-      case "xbox-store":
-        return <FaXbox size={"1.5rem"} className="text-[#859696]" />;
-      case "gog":
-        return <SiGogdotcom size={"1.5rem"} className="text-[#859696]" />;
-      case "nintendo":
-        return <SiNintendo size={"1.2rem"} className="text-[#859696]" />;
-      case "google-play":
-        return <FaGooglePlay size={"1.5rem"} className="text-[#859696]" />;
-      case "apple-appstore":
-        return <GrAppleAppStore size={"1.5rem"} className="text-[#859696]" />;
-      case "pc":
-        return <FaWindows size={"1.5rem"} className="text-[#859696]" />
-      case "xbox":
-        return <FaXbox size={"1.5rem"} className="text-[#859696]" />
-      case "mac":
-        return <FaApple size={"1.5rem"} className="text-[#859696]" />
-      case "linux":
-        return <FaLinux size={"1.5rem"} className="text-[#859696]" />
-    }
-  };
+  if (!singleGame) {
+    return null;
+  }
 
   return isLoading === true ? (
     <Spinner />
@@ -126,19 +35,16 @@ const SingleGame: React.FC<SingleGameProps> = () => {
         <div className="flex flex-col gap-y-5 w-[60%]">
           <div className="flex flex-row items-center gap-x-5">
             <span className="px-1 text-sm text-black bg-white rounded-md">
-              {/* SEP 17, 2013 */}
-              {singleGame?.released}
+              {new Date(singleGame?.released).toLocaleDateString("en-Us", {
+                day: "2-digit",
+                month: "short",
+                year: "numeric",
+              })}
             </span>
             <div className="flex flex-row gap-x-2">
-
-              {
-                singleGame?.parent_platforms.map((platform:Parent_Platforms)=>(
-                 <>
-                  {getStoreIcon(platform.platform.slug)}
-                 </>
-    
-                ))
-              }
+              <PlatformsIconList
+                platforms={singleGame?.parent_platforms.map((p) => p.platform)}
+              />
             </div>
             <span className="text-sm uppercase text-neutral-200">
               AveRAGE PLAYTIME: {singleGame?.playtime} HOURS
@@ -194,26 +100,29 @@ const SingleGame: React.FC<SingleGameProps> = () => {
               </div>
               <div className="flex flex-col">
                 <p className="text-xl font-semibold"># 1</p>
-                {
-                  singleGame?.genres.map((genres:Genres)=>(
-                    <span className="text-sm text-gray-400 underline cursor-pointer hover:text-gray-100">
-                    {genres.name}
+                {singleGame?.genres.map((genre) => (
+                  <span
+                    key={genre.id}
+                    className="text-sm text-gray-400 underline cursor-pointer hover:text-gray-100"
+                  >
+                    {genre.name}
                   </span>
-                  ))
-                }
-
+                ))}
               </div>
               <div>
                 <p className="text-xl font-semibold"># 1</p>
                 <span className="text-sm text-gray-400 underline cursor-pointer hover:text-gray-100">
-                  TOP {singleGame?.released}
+                  TOP {/* {singleGame?.released} */}
+                  {new Date(singleGame?.released).toLocaleDateString("en-Us", {
+                    year: "numeric",
+                  })}
                 </span>
               </div>
             </div>
           </div>
 
           <div className="flex flex-row flex-wrap gap-x-3 gap-y-3">
-            {singleGame?.ratings.map((rating: Ratings) => (
+            {singleGame?.ratings.map((rating) => (
               <div
                 key={rating.id}
                 className="flex flex-row items-center gap-x-1 justify-between px-2 py-1 border-2 border-[#737373] rounded-full"
@@ -238,7 +147,7 @@ const SingleGame: React.FC<SingleGameProps> = () => {
 
         {/* left */}
         <div className="w-[40%]">
-          {displayedImages.map((image: GameScreenshots) => (
+          {displayedImages.map((image) => (
             <div key={image.id} className="flex flex-row justify-end py-2">
               <img
                 src={image.image}
@@ -303,16 +212,14 @@ const SingleGame: React.FC<SingleGameProps> = () => {
               <div>
                 <span className="text-[#414444] font-semibold"> Platforms</span>
 
-                {singleGame?.metacritic_platforms.map(
-                  (metacriticPlatform: Metacritic) => (
-                    <p
-                      key={metacriticPlatform.platform.platform}
-                      className="text-base text-gray-200 underline"
-                    >
-                      {metacriticPlatform.platform.name}
-                    </p>
-                  )
-                )}
+                {singleGame?.metacritic_platforms.map((metacriticPlatform) => (
+                  <p
+                    key={metacriticPlatform.platform.platform}
+                    className="text-base text-gray-200 underline"
+                  >
+                    {metacriticPlatform.platform.name}
+                  </p>
+                ))}
               </div>
               <div>
                 <span className="text-[#414444] font-semibold">
@@ -320,12 +227,16 @@ const SingleGame: React.FC<SingleGameProps> = () => {
                   Release date
                 </span>
                 <p className="text-base text-gray-200 underline">
-                  {singleGame?.released}
+                  {new Date(singleGame?.released).toLocaleDateString("en-Us", {
+                    day: "2-digit",
+                    month: "short",
+                    year: "numeric",
+                  })}
                 </p>
               </div>
               <div>
                 <span className="text-[#414444] font-semibold">Publisher</span>
-                {singleGame?.publishers.map((publisher: Publishers) => (
+                {singleGame?.publishers.map((publisher) => (
                   <p
                     key={publisher.id}
                     className="text-base text-gray-200 underline"
@@ -338,7 +249,7 @@ const SingleGame: React.FC<SingleGameProps> = () => {
             <div className="flex flex-col gap-y-5">
               <div>
                 <span className="text-[#414444] font-semibold"> Genre</span>
-                {singleGame?.genres.map((genres: Genres) => (
+                {singleGame?.genres.map((genres) => (
                   <p
                     key={genres.id}
                     className="text-base text-gray-200 underline"
@@ -349,7 +260,7 @@ const SingleGame: React.FC<SingleGameProps> = () => {
               </div>
               <div>
                 <span className="text-[#414444] font-semibold"> Developer</span>
-                {singleGame?.developers.map((developer: Developers) => (
+                {singleGame?.developers.map((developer) => (
                   <p
                     key={developer.id}
                     className="text-base text-gray-200 underline"
@@ -372,7 +283,7 @@ const SingleGame: React.FC<SingleGameProps> = () => {
           <div className="flex flex-col gap-y-5">
             <div>
               <p className="text-[#414444] font-semibold "> Tags</p>
-              {singleGame?.tags?.map((tag: Tags) => (
+              {singleGame?.tags?.map((tag) => (
                 <span
                   key={tag.id}
                   className="px-1 text-base text-gray-200 underline "
@@ -385,17 +296,17 @@ const SingleGame: React.FC<SingleGameProps> = () => {
               <span className="text-[#414444] font-semibold"> Website</span>
               {singleGame?.website && (
                 <Link
-                  to={singleGame.website}
+                  to={singleGame?.website}
                   target="_blank"
                   className="text-base text-gray-200 underline cursor-pointer"
                 >
-                  {singleGame.website}
+                  {singleGame?.website}
                 </Link>
               )}
             </div>
 
             <div className="flex flex-col gap-y-2">
-              {singleGame?.platforms.map((requirement: Platforms) => {
+              {singleGame?.platforms.map((requirement) => {
                 if (requirement?.requirements?.recommended?.length === 0) {
                   return "";
                 }
@@ -405,21 +316,19 @@ const SingleGame: React.FC<SingleGameProps> = () => {
 
               {showMoreTwo === true ? (
                 <>
-                  {singleGame?.platforms.map(
-                    (requirement: Platforms, index) => (
-                      <div key={index}>
-                        <p className="text-sm shadow-neutral-300">
-                          {" "}
-                          {requirement.requirements.minimum}
-                        </p>
+                  {singleGame?.platforms.map((requirement, index) => (
+                    <div key={index}>
+                      <p className="text-sm shadow-neutral-300">
+                        {" "}
+                        {requirement.requirements.minimum}
+                      </p>
 
-                        <p className="text-sm">
-                          {" "}
-                          {requirement.requirements.recommended}
-                        </p>
-                      </div>
-                    )
-                  )}
+                      <p className="text-sm">
+                        {" "}
+                        {requirement.requirements.recommended}
+                      </p>
+                    </div>
+                  ))}
 
                   <span
                     onClick={() => setShowMoreTwo(false)}
@@ -430,24 +339,19 @@ const SingleGame: React.FC<SingleGameProps> = () => {
                 </>
               ) : (
                 <>
-                  {singleGame?.platforms.map(
-                    (requirement: Platforms, index) => (
-                      <div key={index}>
-                        <p className="text-sm shadow-neutral-300">
-                          {" "}
-                          {requirement.requirements.minimum?.substring(0, 200)}
-                        </p>
+                  {singleGame?.platforms.map((requirement, index) => (
+                    <div key={index}>
+                      <p className="text-sm shadow-neutral-300">
+                        {" "}
+                        {requirement.requirements.minimum?.substring(0, 200)}
+                      </p>
 
-                        <p className="text-sm">
-                          {" "}
-                          {requirement.requirements.recommended?.substring(
-                            0,
-                            0
-                          )}
-                        </p>
-                      </div>
-                    )
-                  )}
+                      <p className="text-sm">
+                        {" "}
+                        {requirement.requirements.recommended?.substring(0, 0)}
+                      </p>
+                    </div>
+                  ))}
                   <span
                     onClick={() => setShowMoreTwo(true)}
                     className="px-1 -mt-5 text-xs text-black bg-white rounded-md cursor-pointer w-max"
@@ -459,7 +363,7 @@ const SingleGame: React.FC<SingleGameProps> = () => {
             </div>
 
             <div className="flex flex-col gap-y-2">
-              {singleGame?.platforms.map((platform: Platforms) => (
+              {singleGame?.platforms.map((platform) => (
                 <p
                   key={platform.platform.id}
                   className="text-2xl font-semibold"
@@ -475,13 +379,12 @@ const SingleGame: React.FC<SingleGameProps> = () => {
           <p className="text-[#706E70] text-lg">Where to buy</p>
           <div className="flex flex-row mt-3 ">
             <div className="flex flex-row flex-wrap gap-x-2 gap-y-3">
-              {singleGame?.stores?.map((store: Store) => (
+              {singleGame?.stores?.map((store) => (
                 <div
                   key={store.store.id}
                   className="w-[220px] rounded-md bg-[#2D2D2D] flex flex-row items-center py-2 px-5 gap-x-2 "
                 >
                   <p className="text-[#859696]">{store.store.name}</p>
-                  {getStoreIcon(store.store.slug)}
                 </div>
               ))}
             </div>

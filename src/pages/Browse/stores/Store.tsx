@@ -1,11 +1,9 @@
-import { useContext } from "react";
-import AppContext from "../../../context/AppContext";
 import Spinner from "../../../components/Spinner";
-import { BrowseStore } from "../../../types/Browse/Store";
+import { useBrowseStore } from "../../../lib/hooks";
 import StoreGames from "./StoreGames";
 
 const Store = () => {
-  const { stores, isLoading } = useContext(AppContext);
+  const { stores, isLoading } = useBrowseStore();
 
   return (
     <section className="flex flex-col font-Poppins gap-y-5">
@@ -16,7 +14,7 @@ const Store = () => {
       ) : (
         <div className="grid flex-row items-center justify-between grid-cols-3 gap-x-5">
           <>
-            {stores.map((store: BrowseStore) => (
+            {stores.map((store) => (
               <div
                 key={store.id}
                 className="relative flex flex-col w-auto h-[280px]  rounded-lg gap-x-5"

@@ -1,12 +1,10 @@
-import AppContext from "../../../context/AppContext";
-import { useContext } from "react";
 import Spinner from "../../../components/Spinner";
-import { BrowsePlatfroms } from "../../../types/Browse/Platforms";
+import { useBrowsePlatforms } from "../../../lib/hooks";
 import GameName from "./GameName";
 
 const Platforms = () => {
   
-  const { browsePlatforms, isLoading } = useContext(AppContext);
+  const { browsePlatforms, isLoading } = useBrowsePlatforms();
 
   return (
     <section className="flex flex-col font-Poppins gap-y-5">
@@ -17,7 +15,7 @@ const Platforms = () => {
       ) : (
         <div className="grid flex-row items-center justify-between grid-cols-3 gap-x-5">
           <>
-            {browsePlatforms.map((platfroms: BrowsePlatfroms) => (
+            {browsePlatforms.map((platfroms) => (
               <div
                 key={platfroms.id}
                 className="relative flex flex-col w-auto h-[280px]  rounded-lg gap-x-5"
@@ -45,7 +43,6 @@ const Platforms = () => {
                     </div>
                     <hr />
                     <GameName platforms={platfroms} />
-                    {/* gamename */}
                   </div>
                 </div>
               </div>

@@ -1,19 +1,17 @@
-import React from "react";
+
 import { IoPersonSharp } from "react-icons/io5";
-import { Games } from "../../../types/Browse/Creators";
+import { BrowseCreators } from "../../../lib/browse-types";
 
-interface Props {
-  creator: {
-    games: Games[];
-  };
-}
+type CreatorGameProp = {
+  creator: BrowseCreators;
+};
 
-const CreatorsGames:React.FC<Props> = ({ creator }) => {
+const CreatorsGames = ({ creator }: CreatorGameProp) => {
   const displayedGames = creator.games.slice(0, 3);
 
   return (
     <div className="flex flex-col gap-y-1">
-      {displayedGames.map((game: Games) => (
+      {displayedGames.map((game) => (
         <div key={game.id} className="flex flex-row justify-between">
           <p className="text-sm underline">{game.name}</p>
           <div className="flex flex-row items-center justify-between gap-x-1">
