@@ -11,7 +11,7 @@ This project is a clone of the popular gaming platform [RAWG.io](https://rawg.io
 
 ## Technologies Used
 
-- **Frontend:** Tailwind Css, Typescript, React.js
+- **Frontend:** Tailwind CSS, Typescript, React.js
 - **API Integration:** RAWG API for fetching game data
 
 ## Getting Started
@@ -25,18 +25,10 @@ This project is a clone of the popular gaming platform [RAWG.io](https://rawg.io
 
 Contributions are welcome! If you'd like to contribute to this project, please fork the repository and submit a pull request with your changes.
 
-## License
-
-This project is licensed under the [MIT License](LICENSE).
-
-## Acknowledgements
-
-Special thanks to [RAWG.io](https://rawg.io/) for providing the inspiration and data for this project.
-
 
 
 📷
 
-![Screenshot (4)](https://github.com/thezeeshann/game-hub/assets/88139550/585f77a7-df18-4696-aa8c-bf5cc3677af2)
+![Screenshot 2024-05-09 225905](https://github.com/thezeeshann/game-hub/assets/88139550/5acd333d-7aac-4920-a52f-afb76193f73c)
 
-![Screenshot (5)](https://github.com/thezeeshann/game-hub/assets/88139550/3d4cf160-7ed5-40cb-97f7-2d22d50b1b4f)
+![Screenshot 2024-05-09 225938](https://github.com/thezeeshann/game-hub/assets/88139550/45634fc2-110f-4389-b98b-dd5de316cd92)
