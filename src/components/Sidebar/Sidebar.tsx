@@ -52,21 +52,21 @@ const Sidebar = () => {
   return (
     <aside className="flex flex-col px-8 py-8 font-Poppins gap-y-5">
       <p className="text-2xl font-bold ">Home</p>
-      <p className="text-2xl font-bold ">Reviewa</p>
+      <p className="text-2xl font-bold ">Reviews</p>
 
       <div className="flex flex-col cursor-pointer gap-y-2">
         <p className="text-2xl font-bold ">New Releases</p>
-        <SidebarItems label="Last 30 days" icon={FaStar} />
-        <SidebarItems label="This week" icon={ImFire} />
-        <SidebarItems label="Next week" icon={TbPlayerTrackNextFilled} />
-        <SidebarItems label="Release calender" icon={FaCalendarAlt} />
+        <SidebarItems to="/" label="Last 30 days" icon={FaStar} />
+        <SidebarItems to="/" label="This week" icon={ImFire} />
+        <SidebarItems to="/" label="Next week" icon={TbPlayerTrackNextFilled} />
+        <SidebarItems to="/" label="Release calender" icon={FaCalendarAlt} />
       </div>
 
       <div className="flex flex-col cursor-pointer gap-y-2">
         <p className="text-2xl font-bold ">Top</p>
-        <SidebarItems label="Best of the year" icon={FaTrophy} />
-        <SidebarItems label="Popular in 2023" icon={IoStatsChartSharp} />
-        <SidebarItems label="All time top" icon={FaCrown} />
+        <SidebarItems to="/" label="Best of the year" icon={FaTrophy} />
+        <SidebarItems to="/" label="Popular in 2023" icon={IoStatsChartSharp} />
+        <SidebarItems to="/" label="All time top" icon={FaCrown} />
       </div>
       <p className="text-2xl font-bold ">All Games</p>
 
@@ -94,15 +94,15 @@ const Sidebar = () => {
 
       <div className="flex flex-col cursor-pointer gap-y-2">
         <p className="text-2xl font-bold">Platforms</p>
-        <SidebarItems label="PC" icon={FaWindows} />
-        <SidebarItems label="PlayStation 4" icon={FaPlaystation} />
-        <SidebarItems label="Xbox One" icon={FaXbox} />
+        <SidebarItems to="/" label="PC" icon={FaWindows} />
+        <SidebarItems to="/" label="PlayStation 4" icon={FaPlaystation} />
+        <SidebarItems to="/" label="Xbox One" icon={FaXbox} />
 
         {platforms && (
           <>
-            <SidebarItems label="Nintendo Switch" icon={BsNintendoSwitch} />
-            <SidebarItems label="ios" icon={FaAppStoreIos} />
-            <SidebarItems label="Android" icon={IoLogoAndroid} />
+            <SidebarItems to="/" label="Nintendo Switch" icon={BsNintendoSwitch} />
+            <SidebarItems to="/" label="ios" icon={FaAppStoreIos} />
+            <SidebarItems to="/" label="Android" icon={IoLogoAndroid} />
           </>
         )}
 
