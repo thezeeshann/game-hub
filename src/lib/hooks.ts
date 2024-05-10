@@ -12,11 +12,20 @@ import {
   BrowseGenres,
   BrowsePublisher,
 } from "../lib/browse-types";
+import { SearchContext } from "../context/SearchContext";
 
 export function useGamesContext() {
   const context = useContext(GameContext);
   if (!context) {
     throw new Error("useGames must be used within a GameProvider");
+  }
+  return context;
+}
+
+export function useSearchContext() {
+  const context = useContext(SearchContext);
+  if (!context) {
+    throw new Error("useSearch must be used within a SearchProvider");
   }
   return context;
 }
